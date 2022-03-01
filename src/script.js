@@ -43,7 +43,6 @@ $(document).ready(function(){
                             <th>Name</th>\
                             <th>Brand</th>\
                             <th>Os</th>\
-                            <th>Hide</th>\
                         </tr>';
         var tableRows="";
         for(var i=0;i<products.length;i++){
@@ -52,7 +51,6 @@ $(document).ready(function(){
                             <td>'+products[i].name+'</td>\
                             <td>'+products[i].brand+'</td>\
                             <td>'+products[i].os+'</td>\
-                            <td><a>Hide</a></td>\
                         </tr>';
         }
         tableRows += '</table>';
@@ -68,7 +66,6 @@ $(document).ready(function(){
                             <th>Name</th>\
                             <th>Brand</th>\
                             <th>Os</th>\
-                            <th>Hide</th>\
                         </tr>';
         var tableRows="";
         for(var i=0;i<products.length;i++){
@@ -78,7 +75,6 @@ $(document).ready(function(){
                             <td>'+products[i].name+'</td>\
                             <td>'+products[i].brand+'</td>\
                             <td>'+products[i].os+'</td>\
-                            <td><a>Hide</a></td>\
                         </tr>';
             }
             
@@ -87,17 +83,69 @@ $(document).ready(function(){
         productTable += tableRows;
         $("#wrapper").html(productTable);
     });
-    var filterByBrand;
-    var filterByOs;
+    $("#filterSection").html('\
+            <lable>Filter\
+                <select id="filterByBrand" name="filterByBrand">\
+                    <option value=""></option>\
+                    <option value="Apple">Apple</option>\
+                    <option value="Motorola">Motorola</option>\
+                    <option value="Samsung">Samsung</option>\
+                    <option value="ASUS">ASUS</option>\
+                    <option value="Microsoft">Microsoft</option>\
+                </select>\
+                <select id="filterByOs" name="filterByOs">\
+                    <option value=""></option>\
+                    <option value="Android">Android</option>\
+                    <option value="iOS">iOS</option>\
+                    <option value="Windows">Windows</option>\
+                </select>\
+         </lable>\
+    ');
+    var filterByBrand='';
+    var filterByOs='';
     $("#filterByBrand").change(function(){
         filterByBrand=$("#filterByBrand").val();
-        filter(filterByBrand);
+        //console.log(filterByBrand,filterByOs);
+        if(filterByBrand!="" && filterByOs!=""){
+            filterBoth(filterByBrand,filterByOs);
+        }else{
+            filter(filterByBrand);
+        }
     });
     $("#filterByOs").change(function(){
         filterByOs=$("#filterByOs").val();
-        filter(filterByOs);
+        //console.log(filterByBrand,filterByOs);
+        if(filterByBrand!="" && filterByOs!=""){
+            filterBoth(filterByBrand,filterByOs);
+        }else{
+            filter(filterByOs);
+        }
     });
-    
+   
+    function filterBoth(filterByBrand,filterByOs){
+        var productTable='<table id="prTable">\
+                        <tr>\
+                            <th>ID</th>\
+                            <th>Name</th>\
+                            <th>Brand</th>\
+                            <th>Os</th>\
+                        </tr>';
+        var tableRows="";
+        for(var i=0;i<products.length;i++){
+            if(products[i].brand == filterByBrand && products[i].os == filterByOs){
+                tableRows +='<tr>\
+                            <td>'+products[i].id+'</td>\
+                            <td>'+products[i].name+'</td>\
+                            <td>'+products[i].brand+'</td>\
+                            <td>'+products[i].os+'</td>\
+                        </tr>';
+            }
+            
+        }
+        tableRows += '</table>';
+        productTable += tableRows;
+        $("#wrapper").html(productTable);
+    }
     function filter(filterVar){
         var productTable='<table id="prTable">\
                         <tr>\
@@ -105,7 +153,6 @@ $(document).ready(function(){
                             <th>Name</th>\
                             <th>Brand</th>\
                             <th>Os</th>\
-                            <th>Hide</th>\
                         </tr>';
         var tableRows="";
         for(var i=0;i<products.length;i++){
@@ -115,7 +162,6 @@ $(document).ready(function(){
                             <td>'+products[i].name+'</td>\
                             <td>'+products[i].brand+'</td>\
                             <td>'+products[i].os+'</td>\
-                            <td><a>Hide</a></td>\
                         </tr>';
             }
             
